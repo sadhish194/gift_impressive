@@ -1,0 +1,65 @@
+
+/* Main container */
+.about {
+  @apply max-w-5xl mx-auto px-6 py-12;
+}
+
+/* Header section */
+.about-header {
+  @apply text-center mb-10;
+}
+
+/* Logo */
+/* Logo wrapper effect */
+.about-logo {
+  @apply w-32 md:w-36 mx-auto mb-6
+         p-4 rounded-2xl bg-white
+         shadow-md ring-1 ring-slate-200;
+}
+
+
+/* Heading */
+.about-header h1 {
+  @apply text-4xl font-bold text-gray-800 mb-2;
+}
+
+/* Subtitle */
+.about-header p {
+  @apply text-lg text-gray-600;
+}
+
+/* Content text */
+.about-content {
+  @apply max-w-4xl mx-auto
+         mt-12
+         space-y-6
+         text-justify
+         text-slate-800
+         leading-relaxed
+         text-base md:text-lg;
+}
+.about-content strong {
+  @apply text-slate-900 font-semibold;
+}
+
+
+/* Values grid */
+.about-values {
+  @apply grid gap-6 mt-12 md:grid-cols-3;
+}
+
+/* Value cards */
+.value-card {
+  @apply bg-white border rounded-xl p-6 text-center shadow-sm
+         hover:shadow-md transition duration-300;
+}
+
+/* Value titles */
+.value-card h3 {
+  @apply text-xl font-semibold text-gray-800 mb-2;
+}
+
+/* Value text */
+.value-card p {
+  @apply text-gray-600;
+}

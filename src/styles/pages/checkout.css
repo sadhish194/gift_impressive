@@ -1,0 +1,113 @@
+/* ===============================
+     CHECKOUT PAGE
+================================ */
+/* PAGE */
+.checkout-page {
+  @apply bg-gray-100 min-h-screen p-4 sm:p-6 lg:p-10;
+}
+
+.checkout-title {
+  @apply text-xl sm:text-2xl font-semibold mb-6;
+}
+
+/* LAYOUT */
+.checkout-container {
+  @apply grid gap-6 lg:gap-8;
+  @apply grid-cols-1 lg:grid-cols-[2.2fr_1fr];
+}
+
+/* LEFT CARD */
+.checkout-form {
+  @apply bg-white p-5 sm:p-6 lg:p-8 rounded-2xl;
+  @apply shadow-[0_10px_30px_rgba(0,0,0,0.05)];
+}
+
+/* SECTION TITLE */
+.section-title {
+  @apply text-lg sm:text-xl font-semibold mb-5 pb-3;
+  @apply border-b border-gray-200;
+}
+
+/* FORM */
+.form-group {
+  @apply mb-4;
+}
+
+.form-group label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.form-group input,
+.form-group textarea {
+  @apply w-full px-4 py-3 text-sm rounded-xl border border-gray-300;
+  @apply transition-all duration-200;
+  @apply focus:outline-none focus:border-pink-500;
+  @apply focus:ring-2 focus:ring-pink-400/30;
+}
+
+.form-group textarea {
+  @apply h-24 resize-none;
+}
+
+/* FORM ROW */
+.form-row {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+}
+
+/* RIGHT CARD */
+.checkout-summary {
+  @apply bg-white p-5 sm:p-6 lg:p-7 rounded-2xl h-fit;
+  @apply shadow-[0_10px_30px_rgba(0,0,0,0.05)];
+  @apply lg:sticky lg:top-28;
+}
+
+.checkout-summary h2 {
+  @apply text-base sm:text-lg font-semibold mb-5;
+}
+
+/* SUMMARY */
+.summary-row {
+  @apply flex justify-between text-sm text-gray-600 mb-3;
+}
+
+.summary-divider {
+  @apply h-px bg-gray-200 my-4;
+}
+
+.summary-total {
+  @apply flex justify-between text-base sm:text-lg font-semibold mb-5;
+}
+
+/* BUTTON */
+.place-order-btn {
+  @apply w-full py-3 rounded-xl text-white text-base font-semibold;
+  @apply bg-gradient-to-r from-pink-500 to-rose-500;
+  @apply transition-all duration-200 cursor-pointer;
+}
+
+.place-order-btn:hover {
+  @apply -translate-y-0.5;
+  box-shadow: 0 10px 20px rgba(236, 72, 153, 0.35);
+}
+
+/* SECURITY NOTE */
+.secure-note {
+  @apply text-center text-xs text-gray-500 mt-4;
+}
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 768px) {
+  .cart-page,
+  .checkout-page {
+    @apply px-5 py-8;
+  }
+
+  .cart-item {
+    @apply flex-col items-start;
+  }
+
+  .cart-item-actions {
+    @apply items-start;
+  }
+}

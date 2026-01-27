@@ -1,0 +1,63 @@
+
+/* ===============================
+   OFFERS SECTION
+================================ */
+.offers {
+  @apply mx-16 my-12 px-10 py-12
+         rounded-[24px] text-center text-white
+         bg-gradient-to-b
+         from-[#ec4899] to-[#ec4899];
+}
+
+
+/* Subtle background highlight (no white bottom) */
+.offers::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 65%);
+  pointer-events: none;
+}
+
+/* ===============================
+   TEXT
+================================ */
+.offers h2 {
+  @apply text-2xl md:text-3xl lg:text-4xl font-extrabold mb-3 tracking-tight;
+}
+
+.offers p {
+  @apply text-base md:text-lg opacity-95 mb-7;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+.offers button {
+  @apply inline-flex items-center justify-center
+         bg-white text-pink-600
+         px-8 md:px-10 py-3
+         rounded-full font-semibold text-sm md:text-base
+         shadow-md transition-all duration-300;
+}
+
+.offers button:hover {
+  @apply bg-pink-50 scale-105 shadow-lg;
+}
+
+/* ===============================
+   MOBILE OPTIMIZATION
+================================ */
+@media (max-width: 480px) {
+  .offers {
+    @apply mx-4 px-5 py-8 rounded-2xl;
+  }
+
+  .offers h2 {
+    @apply text-xl;
+  }
+
+  .offers p {
+    @apply text-sm;
+  }
+}

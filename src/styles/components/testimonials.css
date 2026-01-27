@@ -1,0 +1,36 @@
+/* ===============================
+   TESTIMONIALS
+================================ */
+.testimonials {
+  padding: 4rem 6rem;
+}
+
+.testimonials h2 {
+  @apply text-center text-[1.6rem] font-bold mb-10;
+}
+
+.testimonials-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.review-card {
+  @apply bg-white p-6 rounded-xl text-center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+.review-card p {
+  @apply italic mb-3;
+}

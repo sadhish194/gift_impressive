@@ -1,0 +1,273 @@
+/* ===============================
+   NAVBAR
+================================ */
+.navbar {
+  @apply w-full bg-white sticky top-0 z-50;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* ===============================
+   INNER CONTAINER (DESKTOP GRID)
+================================ */
+.navbar-inner {
+  @apply grid items-center w-full h-16 px-12;
+  grid-template-columns: auto 1fr auto; /* logo | menu | actions */
+}
+
+/* ===============================
+   LOGO
+================================ */
+.logo {
+  @apply font-extrabold whitespace-nowrap;
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+}
+
+.logo a {
+  @apply text-pink-500 no-underline;
+}
+
+/* ===============================
+   DESKTOP MENU (CENTER)
+================================ */
+.menu {
+  @apply hidden justify-center gap-10 list-none
+         font-medium text-gray-600;
+}
+
+.menu a {
+  @apply no-underline transition-colors duration-200;
+}
+
+.menu a:hover {
+  @apply text-pink-500;
+}
+
+/* show menu on desktop */
+@media (min-width: 1024px) {
+  .menu {
+    @apply flex;
+  }
+}
+
+/* ===============================
+   RIGHT ACTIONS
+================================ */
+.nav-actions {
+  @apply flex items-center gap-4;
+}
+
+/* ===============================
+   SEARCH
+================================ */
+.search-input {
+  @apply hidden h-9 w-[200px] rounded-full border
+         border-gray-300 px-4 text-sm outline-none;
+}
+
+.search-input:focus {
+  @apply border-pink-500;
+}
+
+/* show search only on xl */
+@media (min-width: 1280px) {
+  .search-input {
+    @apply block;
+  }
+}
+
+/* ===============================
+   SOCIAL ICONS
+================================ */
+.nav-social {
+  @apply hidden items-center gap-4;
+}
+
+.nav-social a {
+  @apply text-[1.1rem] text-gray-600 transition-colors;
+}
+
+.nav-social a:hover {
+  @apply text-pink-500;
+}
+
+/* show social only on xl */
+@media (min-width: 1280px) {
+  .nav-social {
+    @apply flex;
+  }
+}
+
+/* ===============================
+   ICONS
+================================ */
+.icon {
+  @apply text-[1.3rem] text-gray-600 cursor-pointer
+         transition-colors;
+}
+
+.icon:hover {
+  @apply text-pink-500;
+}
+
+/* ===============================
+   CART
+================================ */
+.cart-wrapper {
+  @apply relative;
+}
+
+.cart-count {
+  @apply absolute -top-1.5 -right-2
+         bg-red-500 text-white text-[11px]
+         px-1.5 py-0.5 rounded-full;
+}
+
+/* ===============================
+   USER LOGIN
+================================ */
+.nav-user {
+  @apply flex items-center gap-2 px-3 py-1.5
+         border border-gray-200 rounded-lg
+         bg-white cursor-pointer
+         transition-colors;
+}
+
+.nav-user:hover {
+  @apply bg-gray-50 border-gray-300;
+}
+
+.user-icon {
+  @apply text-[1.1rem] text-gray-700;
+}
+
+.user-text {
+  @apply flex flex-col leading-tight;
+}
+
+.user-title {
+  @apply text-xs text-gray-500;
+}
+
+.user-action {
+  @apply text-sm font-semibold text-gray-900;
+}
+
+/* ===============================
+   HAMBURGER
+================================ */
+.hamburger {
+  @apply bg-transparent border-0 text-[1.6rem]
+         text-gray-700 cursor-pointer;
+}
+
+/* hide hamburger on desktop */
+@media (min-width: 1024px) {
+  .hamburger {
+    @apply hidden;
+  }
+}
+
+/* ===============================
+   MOBILE MENU
+================================ */
+.mobile-menu {
+  @apply absolute top-16 left-0 w-full
+         bg-white shadow-lg list-none;
+}
+
+.mobile-menu li {
+  @apply px-7 py-4 border-b border-gray-100;
+}
+
+.mobile-menu a,
+.mobile-user-btn {
+  @apply font-medium text-gray-700 no-underline;
+}
+
+.mobile-menu a:hover,
+.mobile-user-btn:hover {
+  @apply text-pink-500;
+}
+/* ===============================
+   MOBILE MENU – PROFESSIONAL
+================================ */
+
+/* overlay */
+.mobile-overlay {
+  @apply fixed inset-0 bg-black/40 z-50;
+}
+
+/* drawer */
+.mobile-drawer {
+  @apply bg-white h-full w-[85%] max-w-sm
+         shadow-xl flex flex-col;
+}
+
+/* header */
+.mobile-header {
+  @apply flex items-center justify-between
+         px-6 py-4 border-b;
+}
+
+.mobile-logo {
+  @apply text-xl font-extrabold text-pink-500;
+}
+
+.mobile-close {
+  @apply text-2xl text-gray-600 hover:text-gray-900;
+}
+
+/* nav list */
+.mobile-nav {
+  @apply flex flex-col divide-y;
+}
+
+.mobile-nav li a {
+  @apply block px-6 py-4 text-gray-700
+         font-medium transition
+         hover:bg-gray-50;
+}
+
+/* footer */
+.mobile-footer {
+  @apply mt-auto p-6 border-t;
+}
+
+.mobile-login-btn {
+  @apply w-full bg-pink-500 text-white
+         py-3 rounded-lg font-semibold
+         transition hover:bg-pink-600;
+}
+
+/* =================================================
+   TABLET & MOBILE GRID FIX (CRITICAL)
+================================================= */
+@media (max-width: 1024px) {
+
+  .navbar-inner {
+    @apply h-[60px] px-5;
+    grid-template-columns: auto auto; /* logo | actions */
+    justify-content: space-between;
+  }
+
+  .menu {
+    @apply hidden;
+  }
+
+  .search-input,
+  .nav-social {
+    @apply hidden;
+  }
+
+  .nav-actions {
+    @apply gap-3;
+  }
+
+  .user-text {
+    @apply hidden;
+  }
+
+  .nav-user {
+    @apply p-1.5;
+  }
+}

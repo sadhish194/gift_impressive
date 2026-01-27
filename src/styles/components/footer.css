@@ -1,0 +1,112 @@
+/* ================= FOOTER STYLES ================= */
+/* ===============================
+   FOOTER
+================================ */
+
+.footer {
+  @apply bg-black text-white mt-16;
+}
+
+/* Layout */
+.footer-top {
+  @apply max-w-7xl mx-auto px-8 py-12
+         grid grid-cols-1 md:grid-cols-4 gap-12;
+}
+
+/* Each footer column */
+.footer-top > div {
+  position: relative;
+}
+
+/* 🔹 Vertical dividers (desktop only) */
+.footer-top > div:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -24px;
+  width: 1px;
+  height: 100%;
+  background-color: #2f2f2f;
+}
+
+/* Brand */
+.footer-brand h2 {
+  @apply text-2xl font-bold mb-3;
+}
+
+.footer-brand p {
+  @apply text-gray-400 leading-relaxed;
+}
+
+/* Section titles */
+.footer-title {
+  @apply text-lg font-semibold mb-4 text-white;
+}
+
+/* Lists */
+.footer-list {
+  @apply list-none text-sm space-y-3 text-gray-400;
+  padding-left: 0;
+}
+
+.footer-list a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-list a:hover {
+  color: #ffffff;
+}
+
+/* Social icons */
+.footer-social {
+  @apply flex gap-4 text-xl;
+}
+
+.footer-social a {
+  color: #9ca3af;
+  transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+  color: #ffffff;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  @apply border-t border-gray-700
+         text-center py-5 text-sm text-gray-400;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .footer-top {
+    @apply grid-cols-2 gap-10 px-6;
+  }
+
+  /* ❌ remove vertical lines */
+  .footer-top > div::after {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .footer-top {
+    @apply grid-cols-1 gap-8 px-5 text-center;
+  }
+
+  .footer-social {
+    justify-content: center;
+  }
+
+  .footer-brand p {
+    margin: 0 auto;
+    max-width: 90%;
+  }
+}

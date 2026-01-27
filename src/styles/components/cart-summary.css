@@ -1,0 +1,33 @@
+/* =========================================================
+   CART SUMMARY
+========================================================= */
+.cart-summary {
+  @apply bg-white p-8 rounded-2xl;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+.cart-summary h3 {
+  @apply text-lg font-semibold mb-6;
+}
+
+.summary-row {
+  @apply flex justify-between text-sm mb-4 text-gray-700;
+}
+
+.summary-divider {
+  @apply h-px bg-gray-200 my-5;
+}
+
+.summary-total {
+  @apply flex justify-between text-lg font-bold text-gray-900 mb-6;
+}
+
+.checkout-btn {
+  @apply w-full py-3 rounded-full text-white text-base font-semibold;
+  background: linear-gradient(135deg, #ff5f7e, #ff7a92);
+  box-shadow: 0 15px 35px rgba(255,95,126,0.45);
+}
+
+.checkout-btn:hover {
+  @apply -translate-y-0.5;
+}

@@ -1,0 +1,41 @@
+
+/* =========================================================
+   CART ITEM
+========================================================= */
+.cart-item {
+  @apply flex items-center gap-6 bg-white p-5 rounded-2xl mb-5;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.cart-item img {
+  @apply w-[90px] h-[90px] object-cover rounded-xl;
+}
+
+.cart-item-info {
+  @apply flex-1;
+}
+
+.cart-item-info h3 {
+  @apply text-base font-semibold text-gray-900 mb-1;
+}
+
+.cart-item-info p {
+  @apply text-sm text-gray-500;
+}
+
+.cart-item-actions {
+  @apply flex flex-col items-end gap-2;
+}
+
+.cart-qty {
+  @apply w-16 px-2 py-1 border border-gray-300 rounded-md text-center;
+}
+
+.remove-btn {
+  @apply text-red-500 text-sm cursor-pointer;
+}
+
+.remove-btn:hover {
+  @apply underline;
+}
+

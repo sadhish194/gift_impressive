@@ -1,0 +1,65 @@
+/* =========================
+   CATEGORIES SECTION
+========================= */
+
+.categories {
+  padding: 4rem 6rem;
+}
+
+/* Section Heading */
+.section-title {
+  @apply text-[1.75rem] font-bold text-center mb-10;
+}
+
+/* Grid Layout */
+.categories .grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .categories .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* =========================
+   CATEGORY CARD
+========================= */
+
+.category-card {
+  @apply relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300;
+  height: 200px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Background Image */
+.category-card img {
+  @apply w-full h-full object-cover transition-transform duration-500;
+}
+
+/* Overlay */
+.category-card::after {
+  content: "";
+  @apply absolute inset-0 bg-black/30;
+}
+
+/* Title */
+.category-card span {
+  @apply absolute inset-0 flex items-center justify-center
+         text-white text-lg font-semibold tracking-wide z-10;
+}
+
+/* Hover Effects */
+.category-card:hover img {
+  transform: scale(1.1);
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
+}
+.section-title {
+  @apply text-[1.75rem] font-bold mb-10 text-center;
+}
