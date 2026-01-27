@@ -1,16 +1,98 @@
-# React + Vite
+ImpressiveGift – UI Development (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About the Project
 
-Currently, two official plugins are available:
+ImpressiveGift is a web-based gift shopping user interface developed using React + Vite.
+The project focuses on building a clean, responsive, and component-based frontend for browsing gifts, viewing products, and managing a shopping cart.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project was developed as part of a Web Development Internship and emphasizes modern frontend practices using Vite for fast development and optimized builds.
 
-## React Compiler
+## Internship Details
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Company: RK Software Solutions
+Internship Type: Web Development Internship
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+React
+
+Vite
+
+JavaScript
+
+HTML
+
+CSS
+
+Tailwind CSS
+
+Context API
+
+## Features
+
+Home page UI
+
+Product listing UI
+
+Cart page UI
+
+Reusable React components
+
+Context API for cart state management
+
+Responsive design
+
+## Folder Structure
+impressive-gift/
+├── node_modules/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Categories.jsx
+│   │   ├── Footer.jsx
+│   │   ├── Hero.jsx
+│   │   ├── Navbar.jsx
+│   │   ├── Offers.jsx
+│   │   ├── Products.jsx
+│   │   ├── Testimonials.jsx
+│   │   └── WhyChooseUs.jsx
+│   ├── context/
+│   │   └── CartContext.jsx
+│   ├── pages/
+│   │   ├── About.jsx
+│   │   ├── Cart.jsx
+│   │   ├── Home.jsx
+│   │   └── ProductsPage.jsx
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── .gitignore
+├── index.html
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── vite.config.js
+└── README.md
+
+## Getting Started
+## Prerequisites
+
+Node.js
+
+npm
+
+## Installation
+npm install
+
+## Run the Project
+npm run dev
+
+## The application will run on:
+http://localhost:5173
+
+
+Sadhish M
+Web Development Intern
+RK Software Solution
