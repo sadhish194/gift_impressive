@@ -1,36 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ===============================
-   TESTIMONIALS
+   SECTION
 ================================ */
-.testimonials {
-  padding: 4rem 6rem;
+.testimonials-section {
+  @apply w-full py-16;
 }
 
-.testimonials h2 {
-  @apply text-center text-[1.6rem] font-bold mb-10;
+/* ===============================
+   CONTAINER
+================================ */
+.testimonials-container {
+  @apply w-full max-w-[1400px] mx-auto px-16;
 }
 
+/* ===============================
+   HEADER
+================================ */
+.testimonials-title {
+  @apply text-2xl font-semibold text-center sm:text-3xl md:text-4xl text-neutral-900;
+}
+
+.testimonials-subtitle {
+  @apply max-w-lg mx-auto mt-4 text-xs leading-relaxed text-center sm:text-sm text-neutral-600;
+}
+
+/* ===============================
+   WRAPPER
+================================ */
+.testimonials-wrapper {
+  @apply relative mt-12;
+}
+
+/* ===============================
+   NAVIGATION ARROWS
+================================ */
+.testimonials-nav {
+  @apply absolute inset-x-0 z-20 -translate-y-1/2 pointer-events-none top-1/2;
+}
+
+.testimonials-nav button {
+  @apply absolute flex items-center justify-center transition bg-white border rounded-full shadow-lg pointer-events-auto w-11 h-11 border-neutral-200 hover:bg-neutral-50;
+}
+
+/* left arrow */
+.testimonials-nav .prev {
+  @apply -left-14;
+}
+
+/* right arrow */
+.testimonials-nav .next {
+  @apply -right-14;
+}
+
+/* hide arrows on mobile */
+@media (max-width: 768px) {
+  .testimonials-nav {
+    @apply hidden;
+  }
+}
+
+/* ===============================
+   GRID
+================================ */
 .testimonials-grid {
-  display: grid;
-  gap: 2rem;
+  @apply grid gap-6;
 }
 
-@media (min-width: 768px) {
-  .testimonials-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* ===============================
+   CARD
+================================ */
+.testimonial-card {
+  @apply flex flex-col justify-between p-6 transition bg-white border border-neutral-200 rounded-2xl hover:-translate-y-1 hover:shadow-xl;
 }
 
-@media (min-width: 1024px) {
-  .testimonials-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.card-header {
+  @apply flex items-start justify-between;
 }
 
-.review-card {
-  @apply bg-white p-6 rounded-xl text-center;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+.stars span {
+  @apply text-sm text-yellow-400;
 }
 
-.review-card p {
-  @apply italic mb-3;
+.date {
+  @apply text-xs text-neutral-500;
+}
+
+.feedback {
+  @apply mt-4 text-sm italic leading-relaxed text-neutral-600;
+}
+
+/* ===============================
+   USER
+================================ */
+.user {
+  @apply flex items-center gap-4 mt-6;
+}
+
+.user img {
+  @apply object-cover rounded-full w-11 h-11;
+}
+
+.name {
+  @apply text-sm font-semibold text-neutral-900;
+}
+
+.role {
+  @apply text-xs text-neutral-500;
+}
+
+/* ===============================
+   DOTS (MOBILE)
+================================ */
+.dots {
+  @apply flex justify-center gap-2 mt-8;
+}
+
+.dot {
+  @apply w-2.5 h-2.5 rounded-full
+         bg-neutral-300 cursor-pointer;
+}
+
+.dot.active {
+  @apply bg-neutral-900;
 }

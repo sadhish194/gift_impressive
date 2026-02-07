@@ -1,12 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useAuth } from "./AuthContext"; // 👈 REQUIRED
+import { useAuth } from "./AuthContext";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth();
 
-  const [cart, setCart] = useState([]);
+  // ⬅️ IMPORTANT: cart starts as null (not [])
+  const [cart, setCart] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const [searchQuery, setSearchQuery] = useState("");
 
   // 🔑 Decide storage key
@@ -16,15 +19,19 @@ export const CartProvider = ({ children }) => {
       : "guest_cart";
   };
 
-  // 📦 Load cart when auth state changes
+  // 📦 Load cart BEFORE first render
   useEffect(() => {
     const key = getStorageKey();
     const storedCart = JSON.parse(localStorage.getItem(key)) || [];
+
     setCart(storedCart);
+    setLoading(false); // ⬅️ cart is now ready
   }, [isAuthenticated, user]);
 
-  // 💾 Save cart whenever it changes
+  // 💾 Save cart ONLY after it is loaded
   useEffect(() => {
+    if (cart === null) return;
+
     const key = getStorageKey();
     localStorage.setItem(key, JSON.stringify(cart));
   }, [cart, isAuthenticated, user]);
@@ -62,11 +69,13 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  // 🧮 Total price
-  const totalPrice = cart.reduce(
-    (sum, item) => sum + item.price * item.qty,
-    0
-  );
+  // 🧮 Total price (safe when cart is null)
+  const totalPrice = cart
+    ? cart.reduce(
+        (sum, item) => sum + item.price * item.qty,
+        0
+      )
+    : 0;
 
   return (
     <CartContext.Provider
@@ -76,13 +85,13 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         updateQty,
         totalPrice,
-
-        // 🔍 SEARCH
+        loading,          // ⬅️ EXPOSE loading
         searchQuery,
         setSearchQuery,
       }}
     >
-      {children}
+      {/* ⛔ BLOCK CHILDREN UNTIL CART IS READY */}
+      {!loading && children}
     </CartContext.Provider>
   );
 };

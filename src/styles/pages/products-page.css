@@ -1,4 +1,6 @@
- /* PRODUCTS SECTION */
+/* ===============================
+   PRODUCTS SECTION
+================================ */
 .products {
   padding: 2.5rem 6rem 4rem;
 }
@@ -7,7 +9,9 @@
   @apply text-[1.75rem] font-bold text-center mb-10;
 }
 
-/* GRID — use CSS, NOT @apply */
+/* ===============================
+   GRID
+================================ */
 .products .grid {
   display: grid;
   gap: 2rem;
@@ -26,13 +30,15 @@
   }
 }
 
-/* PRODUCT CARD */
+/* ===============================
+   PRODUCT CARD
+================================ */
 .product-card {
   @apply bg-white rounded-[18px] overflow-hidden
          transition-transform transition-shadow duration-300;
-  display: flex;              /* ❗ CSS */
+  display: flex;
   flex-direction: column;
-  height: 100%;     /* ❗ CSS */
+  height: 100%;
   box-shadow: 0 10px 25px rgba(0,0,0,0.07);
 }
 
@@ -41,48 +47,76 @@
   box-shadow: 0 20px 40px rgba(0,0,0,0.12);
 }
 
-/* IMAGE WRAPPER */
+/* ===============================
+   IMAGE WRAPPER (FIXED & BALANCED)
+================================ */
 .img-wrapper {
-  @apply relative overflow-hidden shrink-0;
-  height: 220px;              /* ❗ CSS */
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  height: 260px;                 /* balanced image area */
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* IMAGE — CLEAN LOOK */
 .img-wrapper img {
-  @apply w-full h-full object-cover transition-transform duration-500;
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;           /* no cropping */
+  transition: transform 0.4s ease;
 }
 
+/* HOVER EFFECT */
 .product-card:hover img {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
-/* OVERLAY */
+/* ===============================
+   OVERLAY
+================================ */
 .overlay {
-  @apply absolute inset-0 bg-black/60
-         opacity-0 transition-opacity duration-300;
-  display: flex;              /* ❗ CSS */
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .product-card:hover .overlay {
-  @apply opacity-100;
+  opacity: 1;
 }
 
-/* OVERLAY BUTTON */
+/* ===============================
+   OVERLAY BUTTON
+================================ */
 .overlay button {
-  @apply bg-pink-600 text-white font-semibold
-         px-7 py-3 rounded-full cursor-pointer
-         transition-transform transition-colors duration-200;
+  padding: 0.75rem 1.75rem;
+  background: #ec4899;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 9999px;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .overlay button:hover {
-  @apply bg-pink-700 scale-105;
+  background: #db2777;
+  transform: scale(1.05);
 }
 
-/* PRODUCT INFO */
+/* ===============================
+   PRODUCT INFO
+================================ */
 .product-info {
-  @apply text-center p-4 bg-white;
-  flex-grow: 1;              /* 🔑 fills remaining space */
+  @apply p-4 text-center bg-white;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -90,7 +124,7 @@
 
 .product-info h4 {
   @apply text-base font-semibold mb-1.5;
-  min-height: 3rem; 
+  min-height: 3rem;
 }
 
 .rating {
@@ -100,10 +134,10 @@
 .price {
   @apply text-lg font-bold;
 }
+
 /* ===============================
    PRODUCT FILTER TABS
 ================================ */
-
 .product-filters {
   display: flex;
   justify-content: center;
