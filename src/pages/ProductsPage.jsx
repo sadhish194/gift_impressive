@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { products } from "../data/products";
-
+import axios from "../api/axios";
 
 const CATEGORIES = ["All", "Birthday", "Anniversary", "Personalized", "Corporate"];
 
@@ -10,8 +9,33 @@ export default function ProductsPage() {
   const { addToCart, searchQuery } = useCart();
   const { category } = useParams();
 
+  const [products, setProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  // 🔥 Fetch products from backend
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get("/products");
+        console.log(res.data);
+        setProducts(res.data);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load products");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+useEffect(() => {
+  axios.get("http://localhost:5000/api/products")
+    .then(res => console.log("API DATA:", res.data))
+    .catch(err => console.error(err));
+}, []);
   // 🔗 Sync category with URL
   useEffect(() => {
     if (category) {
@@ -23,18 +47,33 @@ export default function ProductsPage() {
     }
   }, [category]);
 
-  // 🔍 Category filter
+  // 🔍 Category filter (based on DB field)
   const categoryFiltered =
     activeCategory === "All"
       ? products
       : products.filter(
-          (product) => product.category === activeCategory
+          (product) =>
+            product.category?.toLowerCase() === activeCategory.toLowerCase()
         );
 
   // 🔎 Search filter
   const filteredProducts = categoryFiltered.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    product.productName
+      ?.toLowerCase()
+      .includes(searchQuery?.toLowerCase() || "")
   );
+
+  if (loading) {
+    return <p style={{ textAlign: "center" }}>Loading products...</p>;
+  }
+
+  if (error) {
+    return (
+      <p style={{ textAlign: "center", color: "red" }}>
+        {error}
+      </p>
+    );
+  }
 
   return (
     <section className="products">
@@ -58,15 +97,18 @@ export default function ProductsPage() {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <Link
-              to={`/product/${product.id}`}
-              key={product.id}
+              to={`/product/${product._id}`}
+              key={product._id}
               className="product-link"
             >
               <div className="product-card">
                 <div className="img-wrapper">
                   <img
-                    src={product.image}
-                    alt={product.name}
+                    src={
+                      product.image ||
+                      "https://via.placeholder.com/300"
+                    }
+                    alt={product.productName}
                   />
 
                   <div className="overlay">
@@ -82,22 +124,26 @@ export default function ProductsPage() {
                 </div>
 
                 <div className="product-info">
-                  <h4>{product.name}</h4>
-
-                  <div className="rating">
-                    ⭐ {product.rating}
-                    <span> ({product.reviews})</span>
-                  </div>
+                  <h4>{product.productName}</h4>
 
                   <div className="price">
                     ₹{product.price}
                   </div>
+
+                  {/* <div className="stock">
+                    Stock: {product.stock}
+                  </div> */}
                 </div>
               </div>
             </Link>
           ))
         ) : (
-          <p style={{ gridColumn: "1 / -1", textAlign: "center" }}>
+          <p
+            style={{
+              gridColumn: "1 / -1",
+              textAlign: "center",
+            }}
+          >
             No products found 😕
           </p>
         )}

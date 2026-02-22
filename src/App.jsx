@@ -23,6 +23,8 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ProductManagement from "./pages/admin/ProductManagement";
 import CartUsers from "./pages/admin/CartUsers";
+import Orders from "./pages/admin/Orders";
+
 
 /* ---------- USER LAYOUT ---------- */
 const UserLayout = ({ children }) => {
@@ -84,6 +86,7 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/products" element={<ProductManagement />} />
           <Route path="/admin/carts" element={<CartUsers />} />
+          <Route path="/admin/orders" element={<Orders />} />
 
         </Routes>
       </BrowserRouter>

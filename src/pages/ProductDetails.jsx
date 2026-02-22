@@ -1,8 +1,8 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
-import { products } from "../data/products";
 import { useAuth } from "../context/AuthContext";
+import axios from "../api/axios";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -11,12 +11,19 @@ export default function ProductDetails() {
   const { addToCart } = useContext(CartContext);
   const { isAuthenticated } = useAuth();
 
-  const product = products.find(p => p.id === Number(id));
+  const [product, setProduct] = useState(null);
   const [image, setImage] = useState(null);
 
+  // 🔥 FETCH PRODUCT FROM BACKEND
   useEffect(() => {
-    if (product) setImage(product.image);
-  }, [product]);
+    axios
+      .get(`/products/${id}`)
+      .then((res) => {
+        setProduct(res.data);
+        setImage(res.data.image);
+      })
+      .catch((err) => console.error(err));
+  }, [id]);
 
   // BUY NOW HANDLER
   const handleBuyNow = () => {
@@ -24,10 +31,10 @@ export default function ProductDetails() {
 
     if (!isAuthenticated) {
       navigate("/login", {
-        state: { from: `/checkout/${product.id}` }
+        state: { from: `/checkout/${product._id}` }
       });
     } else {
-      navigate(`/checkout/${product.id}`);
+      navigate(`/checkout/${product._id}`);
     }
   };
 
@@ -46,7 +53,7 @@ export default function ProductDetails() {
       {/* Breadcrumb */}
       <p className="pd-breadcrumb">
         Home / Products / {product.category} /
-        <span> {product.name}</span>
+        <span> {product.productName}</span>
       </p>
 
       <div className="pd-layout">
@@ -54,12 +61,10 @@ export default function ProductDetails() {
         {/* LEFT SIDE */}
         <div className="pd-left">
 
-          {/* MAIN PRODUCT IMAGE */}
           <div className="pd-main-image">
-            {image && <img src={image} alt={product.name} />}
+            {image && <img src={image} alt={product.productName} />}
           </div>
 
-          {/* THUMBNAILS UNDER IMAGE */}
           <div className="pd-thumbnails">
             <div
               className={`pd-thumbnail ${image === product.image ? "active" : ""}`}
@@ -74,7 +79,7 @@ export default function ProductDetails() {
         {/* RIGHT SIDE */}
         <div className="pd-right">
 
-          <h1 className="pd-title">{product.name}</h1>
+          <h1 className="pd-title">{product.productName}</h1>
 
           <div className="pd-rating">
             {Array(5).fill("").map((_, i) => (
@@ -92,14 +97,14 @@ export default function ProductDetails() {
           </div>
 
           <div className="pd-price">
-            ₹{product.price.toLocaleString("en-IN")}
+            ₹{product.price?.toLocaleString("en-IN")}
             <span>(inclusive of all taxes)</span>
           </div>
 
           <p className="pd-about">About Product</p>
 
           <ul className="pd-features">
-            {product.features.map((f, i) => (
+            {product.features?.map((f, i) => (
               <li key={i}>{f}</li>
             ))}
           </ul>

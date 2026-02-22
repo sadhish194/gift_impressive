@@ -1,13 +1,48 @@
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import axios from "../api/axios";
 
 export default function Payment() {
-  const { totalPrice } = useCart();
+  const { cart, totalPrice, setCart } = useCart();
+  const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  const handlePayment = (method) => {
-    alert(`Payment Successful via ${method}`);
-    navigate("/order-success"); // redirect after payment
+  const handlePayment = async (method) => {
+    if (!isAuthenticated) {
+      alert("Please login to continue");
+      navigate("/login");
+      return;
+    }
+
+    if (!cart || cart.length === 0) {
+      alert("Cart is empty");
+      return;
+    }
+
+    try {
+      await axios.post("/orders", {
+        user: user, // ✅ FIXED HERE
+        orderItems: cart.map((item) => ({
+          product: item._id || item.id,
+          quantity: item.qty,
+          price: item.price,
+        })),
+        totalAmount: totalPrice,
+        paymentMethod: method,
+        status: method === "COD" ? "Placed" : "Paid",
+      });
+
+      setCart([]);
+
+      alert(`Payment Successful via ${method}`);
+
+      navigate("/order-success");
+
+    } catch (error) {
+      console.error(error.response?.data || error);
+      alert(error.response?.data?.message || "Payment Failed");
+    }
   };
 
   return (
@@ -15,7 +50,6 @@ export default function Payment() {
       <h1 className="payment-title">Payment</h1>
 
       <div className="payment-container">
-        {/* LEFT : PAYMENT METHODS */}
         <div className="payment-methods">
           <h2>Select Payment Method</h2>
 
@@ -36,7 +70,6 @@ export default function Payment() {
           </button>
         </div>
 
-        {/* RIGHT : PRICE SUMMARY */}
         <div className="payment-summary">
           <h2>Order Summary</h2>
 

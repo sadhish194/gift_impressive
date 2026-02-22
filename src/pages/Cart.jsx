@@ -7,7 +7,7 @@ export default function Cart() {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  // 🛒 EMPTY CART (ONLY WHEN TRULY EMPTY)
+  // Empty Cart
   if (cart.length === 0) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-gradient-to-br from-pink-50 to-white">
@@ -28,11 +28,10 @@ export default function Cart() {
     );
   }
 
-  // ✅ CART PAGE (STABLE RENDER)
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-pink-50">
       <div className="px-4 py-10 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        {/* HEADER */}
+        {/* Header */}
         <h1 className="mb-8 text-2xl font-bold text-gray-800 sm:text-3xl">
           Shopping Cart
           <span className="ml-2 text-sm font-medium text-pink-600">
@@ -41,26 +40,25 @@ export default function Cart() {
         </h1>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
-          {/* LEFT – CART ITEMS */}
+          {/* Left Side - Cart Items */}
           <div className="space-y-6 lg:col-span-2">
             {cart.map((item) => (
               <div
-                key={item.id}
+                key={item._id}
                 className="grid grid-cols-1 sm:grid-cols-[auto_1fr_auto] gap-4 items-center
                            p-5 bg-white rounded-2xl shadow-sm hover:shadow-lg transition
                            border-l-4 border-pink-500"
               >
-                {/* IMAGE – FIXED SIZE (NO LAYOUT SHIFT) */}
+                {/* Image */}
                 <div className="overflow-hidden bg-gray-100 w-28 h-28 rounded-xl ring-1 ring-gray-200">
                   <img
                     src={item.image}
                     alt={item.name}
-                    loading="eager"
                     className="object-cover w-full h-full"
                   />
                 </div>
 
-                {/* DETAILS */}
+                {/* Details */}
                 <div className="flex flex-col gap-2">
                   <h3 className="text-lg font-semibold text-gray-800">
                     {item.name}
@@ -70,14 +68,15 @@ export default function Cart() {
                     ₹{item.price}
                   </p>
 
-                  {/* QTY + REMOVE */}
+                  {/* Quantity Controls */}
                   <div className="flex items-center gap-4 mt-2">
                     <div className="flex items-center overflow-hidden bg-gray-100 rounded-xl">
                       <button
                         onClick={() =>
-                          updateQty(item.id, Math.max(1, item.qty - 1))
+                          updateQty(item._id, item.qty - 1)
                         }
-                        className="px-4 py-2 text-lg hover:bg-gray-200"
+                        disabled={item.qty <= 1}
+                        className="px-4 py-2 text-lg hover:bg-gray-200 disabled:opacity-50"
                       >
                         −
                       </button>
@@ -88,7 +87,7 @@ export default function Cart() {
 
                       <button
                         onClick={() =>
-                          updateQty(item.id, item.qty + 1)
+                          updateQty(item._id, item.qty + 1)
                         }
                         className="px-4 py-2 text-lg hover:bg-gray-200"
                       >
@@ -97,7 +96,7 @@ export default function Cart() {
                     </div>
 
                     <button
-                      onClick={() => removeFromCart(item.id)}
+                      onClick={() => removeFromCart(item._id)}
                       className="text-sm text-red-500 hover:underline"
                     >
                       Remove
@@ -105,7 +104,7 @@ export default function Cart() {
                   </div>
                 </div>
 
-                {/* ITEM TOTAL */}
+                {/* Item Total */}
                 <div className="text-lg font-semibold text-right text-gray-800 sm:self-center">
                   ₹{item.price * item.qty}
                 </div>
@@ -113,7 +112,7 @@ export default function Cart() {
             ))}
           </div>
 
-          {/* RIGHT – SUMMARY */}
+          {/* Right Side - Summary */}
           <div className="p-6 bg-white border border-gray-100 shadow-lg rounded-2xl h-fit lg:sticky lg:top-24">
             <h2 className="mb-4 text-lg font-semibold text-gray-800 sm:text-xl">
               Price Details

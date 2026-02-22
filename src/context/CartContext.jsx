@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useAuth } from "./AuthContext";
 
 export const CartContext = createContext();
@@ -6,76 +6,98 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth();
 
-  // ⬅️ IMPORTANT: cart starts as null (not [])
-  const [cart, setCart] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const [searchQuery, setSearchQuery] = useState("");
-
-  // 🔑 Decide storage key
-  const getStorageKey = () => {
-    return isAuthenticated && user
-      ? `user_cart_${user}`
-      : "guest_cart";
-  };
-
-  // 📦 Load cart BEFORE first render
-  useEffect(() => {
-    const key = getStorageKey();
-    const storedCart = JSON.parse(localStorage.getItem(key)) || [];
-
-    setCart(storedCart);
-    setLoading(false); // ⬅️ cart is now ready
+  // 🔑 Dynamic storage key
+  const storageKey = useMemo(() => {
+    if (isAuthenticated && user?._id) {
+      return `user_cart_${user._id}`;
+    }
+    return "guest_cart";
   }, [isAuthenticated, user]);
 
-  // 💾 Save cart ONLY after it is loaded
+  // 📦 Load cart
   useEffect(() => {
-    if (cart === null) return;
+    setLoading(true);
+    try {
+      const stored = localStorage.getItem(storageKey);
+      setCart(stored ? JSON.parse(stored) : []);
+    } catch (error) {
+      console.error("Cart load error:", error);
+      setCart([]);
+    }
+    setLoading(false);
+  }, [storageKey]);
 
-    const key = getStorageKey();
-    localStorage.setItem(key, JSON.stringify(cart));
-  }, [cart, isAuthenticated, user]);
+  // 💾 Save cart
+  useEffect(() => {
+    if (!loading) {
+      localStorage.setItem(storageKey, JSON.stringify(cart));
+    }
+  }, [cart, storageKey, loading]);
 
-  // ➕ Add to cart
+  // ➕ Add to cart (FINAL NORMALIZED VERSION)
   const addToCart = (product) => {
-    setCart((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
+    const normalizedProduct = {
+      _id: product._id,
+      name: product.productName || product.name || product.title || "Product",
+      price: product.price,
+      image: product.image,
+      stock: product.stock ?? 0,
+    };
 
-      if (existing) {
+    setCart((prev) => {
+      const exists = prev.find(
+        (item) => item._id === normalizedProduct._id
+      );
+
+      if (exists) {
         return prev.map((item) =>
-          item.id === product.id
+          item._id === normalizedProduct._id
             ? { ...item, qty: item.qty + 1 }
             : item
         );
       }
 
-      return [...prev, { ...product, qty: 1 }];
+      return [...prev, { ...normalizedProduct, qty: 1 }];
     });
   };
 
-  // ➖ Remove item
-  const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+  // ➖ Remove
+  const removeFromCart = (_id) => {
+    setCart((prev) =>
+      prev.filter((item) => item._id !== _id)
+    );
   };
 
   // 🔄 Update quantity
-  const updateQty = (id, qty) => {
-    if (qty <= 0) return;
-
+  const updateQty = (_id, qty) => {
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, qty } : item
+        item._id === _id
+          ? { ...item, qty: Math.max(1, qty) }
+          : item
       )
     );
   };
 
-  // 🧮 Total price (safe when cart is null)
-  const totalPrice = cart
-    ? cart.reduce(
-        (sum, item) => sum + item.price * item.qty,
-        0
-      )
-    : 0;
+  // 🧹 Clear cart
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  // 🧮 Totals
+  const totalItems = cart.reduce(
+    (sum, item) => sum + item.qty,
+    0
+  );
+
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.qty,
+    0
+  );
 
   return (
     <CartContext.Provider
@@ -84,17 +106,17 @@ export const CartProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         updateQty,
+        clearCart,
+        totalItems,
         totalPrice,
-        loading,          // ⬅️ EXPOSE loading
         searchQuery,
         setSearchQuery,
+        loading,
       }}
     >
-      {/* ⛔ BLOCK CHILDREN UNTIL CART IS READY */}
-      {!loading && children}
+      {children}
     </CartContext.Provider>
   );
 };
 
-// ✅ CUSTOM HOOK
 export const useCart = () => useContext(CartContext);

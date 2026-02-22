@@ -1,98 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "../api/axios";
 import { useCart } from "../context/CartContext";
-
-// Product Images
-import p1 from "../assets/products/custom-mug.jpg";
-import p2 from "../assets/products/gift-hamper.jpg";
-import p3 from "../assets/products/photo-frame.jpg";
-import p4 from "../assets/products/teddy-bear.jpg";
-import p5 from "../assets/products/Chocolate-bouquet.jpg";
-import p11 from "../assets/products/personalized-3d-led-photo-frame.jpg";
-import p13 from "../assets/products/wooden-couple-photo-keychain.jpg";
-import p16 from "../assets/products/anniversary-photo-story-frame.jpg";
-
-// Product Data
-const products = [
-  {
-    id: 1,
-    name: "Custom Mug",
-    price: 899,
-    rating: 4.8,
-    reviews: 124,
-    image: p1,
-    category: "Personalized",
-  },
-  {
-    id: 2,
-    name: "Gift Hamper",
-    price: 1499,
-    rating: 4.9,
-    reviews: 89,
-    image: p2,
-    category: "Corporate",
-  },
-  {
-    id: 3,
-    name: "Photo Frame",
-    price: 649,
-    rating: 4.7,
-    reviews: 156,
-    image: p3,
-    category: "Anniversary",
-  },
-  {
-    id: 4,
-    name: "Teddy Bear",
-    price: 799,
-    rating: 4.6,
-    reviews: 73,
-    image: p4,
-    category: "Birthday",
-  },
-  {
-    id: 5,
-    name: "Chocolate Bouquet",
-    price: 1199,
-    rating: 4.8,
-    reviews: 121,
-    image: p5,
-    category: "Birthday",
-  },
-  {
-    id: 11,
-    name: "Personalized 3D LED Photo Frame",
-    price: 1799,
-    rating: 4.9,
-    reviews: 143,
-    image: p11,
-    category: "Anniversary",
-  },
-  {
-    id: 13,
-    name: "Wooden Couple Photo Keychain",
-    price: 799,
-    rating: 4.8,
-    reviews: 119,
-    image: p13,
-    category: "Personalized",
-  },
-  {
-    id: 16,
-    name: "Anniversary Photo Story Frame",
-    price: 1999,
-    rating: 4.9,
-    reviews: 158,
-    image: p16,
-    category: "Anniversary",
-  },
-];
 
 export default function Products() {
   const { addToCart, searchQuery } = useCart();
+  const [products, setProducts] = useState([]);
   const [activeCategory] = useState("All");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // 🔍 Filter by category
+  // 🔥 Fetch products from backend (Dynamic)
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get("/products");
+
+        // ✅ ONLY CHANGE: show first 4 products
+        setProducts(res.data.slice(0, 8));
+
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load products");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // 🔍 Category filter
   const categoryFiltered =
     activeCategory === "All"
       ? products
@@ -100,10 +38,20 @@ export default function Products() {
           (product) => product.category === activeCategory
         );
 
-  // 🔎 Filter by search
+  // 🔎 Search filter
   const filteredProducts = categoryFiltered.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    product.productName
+      ?.toLowerCase()
+      .includes(searchQuery?.toLowerCase() || "")
   );
+
+  if (loading) {
+    return <p style={{ textAlign: "center" }}>Loading products...</p>;
+  }
+
+  if (error) {
+    return <p style={{ textAlign: "center", color: "red" }}>{error}</p>;
+  }
 
   return (
     <section className="products">
@@ -113,18 +61,20 @@ export default function Products() {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <Link
-              to={`/product/${product.id}`}
-              key={product.id}
+              to={`/product/${product._id}`}
+              key={product._id}
               className="product-link"
             >
               <div className="product-card">
                 <div className="img-wrapper">
                   <img
-                    src={product.image}
-                    alt={product.name}
+                    src={
+                      product.image ||
+                      "https://via.placeholder.com/300"
+                    }
+                    alt={product.productName}
                   />
 
-                  {/* Add to Cart Overlay */}
                   <div className="overlay">
                     <button
                       onClick={(e) => {
@@ -138,13 +88,7 @@ export default function Products() {
                 </div>
 
                 <div className="product-info">
-                  <h4>{product.name}</h4>
-
-                  <div className="rating">
-                    ⭐ {product.rating}
-                    <span> ({product.reviews})</span>
-                  </div>
-
+                  <h4>{product.productName}</h4>
                   <div className="price">
                     ₹{product.price}
                   </div>
