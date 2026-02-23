@@ -14,7 +14,7 @@ import {
 } from "react-icons/fa";
 
 export default function Navbar() {
-  const { cart, searchQuery, setSearchQuery } = useCart();
+  const { cart, searchQuery, setSearchQuery, totalItems } = useCart();
   const { isAuthenticated, user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -32,6 +32,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
+
         {/* LOGO */}
         <h2 className="logo">
           <Link to="/" onClick={() => setMenuOpen(false)}>
@@ -41,31 +42,16 @@ export default function Navbar() {
 
         {/* DESKTOP MENU */}
         <ul className="menu">
-          <li>
-            <Link to="/" onClick={() => setMenuOpen(false)}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/products" onClick={() => setMenuOpen(false)}>
-              Our Products
-            </Link>
-          </li>
-          <li>
-            <Link to="/about" onClick={() => setMenuOpen(false)}>
-              About Us
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" onClick={() => setMenuOpen(false)}>
-              Contact Us
-            </Link>
-          </li>
+          <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
+          <li><Link to="/products" onClick={() => setMenuOpen(false)}>Our Products</Link></li>
+          <li><Link to="/about" onClick={() => setMenuOpen(false)}>About Us</Link></li>
+          <li><Link to="/contact" onClick={() => setMenuOpen(false)}>Contact Us</Link></li>
         </ul>
 
         {/* RIGHT ACTIONS */}
         <div className="nav-actions">
-          {/* 🔍 SEARCH */}
+
+          {/* SEARCH */}
           <input
             type="text"
             placeholder="Search gifts..."
@@ -74,7 +60,7 @@ export default function Navbar() {
             className="search-input"
           />
 
-          {/* SOCIAL ICONS (DESKTOP) */}
+          {/* SOCIAL ICONS */}
           <div className="nav-social">
             <a href="https://facebook.com" target="_blank" rel="noreferrer">
               <FaFacebookF />
@@ -90,8 +76,8 @@ export default function Navbar() {
           {/* CART */}
           <Link to="/cart" className="cart-wrapper">
             <FaShoppingCart className="icon" />
-            {cart.length > 0 && (
-              <span className="cart-count">{cart.length}</span>
+            {totalItems > 0 && (
+              <span className="cart-count">{totalItems}</span>
             )}
           </Link>
 
@@ -105,7 +91,9 @@ export default function Navbar() {
 
             <div className="user-text">
               <span className="user-title">
-                {isAuthenticated ? user.split("@")[0] : "Hello,"}
+                {isAuthenticated
+                  ? user?.email?.split("@")[0]
+                  : "Hello,"}
               </span>
               <span className="user-action">
                 {isAuthenticated ? "Logout" : "Login"}
@@ -113,72 +101,51 @@ export default function Navbar() {
             </div>
           </button>
 
-
-          {/* HAMBURGER (MOBILE) */}
+          {/* HAMBURGER */}
           <button
             className="hamburger"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
+
         </div>
       </div>
 
-      {/* MOBILE MENU */}
       {/* MOBILE MENU */}
       {menuOpen && (
-      <div className="mobile-overlay">
-        <div className="mobile-drawer">
+        <div className="mobile-overlay">
+          <div className="mobile-drawer">
 
-          {/* HEADER */}
-          <div className="mobile-header">
-            <h2 className="mobile-logo">Impressive Gift</h2>
+            <div className="mobile-header">
+              <h2 className="mobile-logo">Impressive Gift</h2>
+              <button
+                className="mobile-close"
+                onClick={() => setMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <FaTimes />
+              </button>
+            </div>
 
-            <button
-              className="mobile-close"
-              onClick={() => setMenuOpen(false)}
-              aria-label="Close menu"
-            >
-              <FaTimes />
-            </button>
+            <ul className="mobile-nav">
+              <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
+              <li><Link to="/products" onClick={() => setMenuOpen(false)}>Our Products</Link></li>
+              <li><Link to="/about" onClick={() => setMenuOpen(false)}>About Us</Link></li>
+              <li><Link to="/contact" onClick={() => setMenuOpen(false)}>Contact Us</Link></li>
+            </ul>
+
+            <div className="mobile-footer">
+              <button
+                className="mobile-login-btn"
+                onClick={handleUserClick}
+              >
+                {isAuthenticated ? "Logout" : "Login"}
+              </button>
+            </div>
+
           </div>
-
-          {/* NAV LINKS */}
-          <ul className="mobile-nav">
-            <li>
-              <Link to="/" onClick={() => setMenuOpen(false)}>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/products" onClick={() => setMenuOpen(false)}>
-                Our Products
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" onClick={() => setMenuOpen(false)}>
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" onClick={() => setMenuOpen(false)}>
-                Contact Us
-              </Link>
-            </li>
-          </ul>
-
-          {/* FOOTER ACTION */}
-          <div className="mobile-footer">
-            <button
-              className="mobile-login-btn"
-              onClick={handleUserClick}
-            >
-              {isAuthenticated ? "Logout" : "Login"}
-            </button>
-          </div>
-
         </div>
-      </div>
       )}
 
     </nav>

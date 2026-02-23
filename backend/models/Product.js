@@ -15,9 +15,10 @@ const productSchema = new mongoose.Schema(
 
     // 🔥 CHANGE HERE (Reference to Category)
     category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+          category: {
+      type: String,
       required: true
+}
     },
 
     image: {

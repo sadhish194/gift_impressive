@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { CartContext } from "../context/CartContext";
+import { useEffect, useState } from "react";
+import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import axios from "../api/axios";
 
@@ -8,26 +8,31 @@ export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useCart();
   const { isAuthenticated } = useAuth();
 
   const [product, setProduct] = useState(null);
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // 🔥 FETCH PRODUCT FROM BACKEND
   useEffect(() => {
-    axios
-      .get(`/products/${id}`)
-      .then((res) => {
+    const fetchProduct = async () => {
+      try {
+        const res = await axios.get(`/products/${id}`);
         setProduct(res.data);
         setImage(res.data.image);
-      })
-      .catch((err) => console.error(err));
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
   }, [id]);
 
-  // BUY NOW HANDLER
   const handleBuyNow = () => {
-    addToCart({ ...product, qty: 1, buyNow: true });
+    addToCart(product);
 
     if (!isAuthenticated) {
       navigate("/login", {
@@ -37,6 +42,26 @@ export default function ProductDetails() {
       navigate(`/checkout/${product._id}`);
     }
   };
+
+  /* 🔥 LOADING SKELETON */
+  if (loading) {
+    return (
+      <div className="pd-page">
+        <div className="pd-layout">
+          <div className="pd-left">
+            <div style={{ height: "400px", background: "#e5e5e5" }} />
+          </div>
+
+          <div className="pd-right">
+            <div style={{ height: "30px", background: "#e5e5e5", marginBottom: "20px" }} />
+            <div style={{ height: "20px", background: "#e5e5e5", marginBottom: "20px", width: "50%" }} />
+            <div style={{ height: "20px", background: "#e5e5e5", marginBottom: "20px", width: "70%" }} />
+            <div style={{ height: "40px", background: "#e5e5e5", width: "200px" }} />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -50,7 +75,6 @@ export default function ProductDetails() {
   return (
     <div className="pd-page">
 
-      {/* Breadcrumb */}
       <p className="pd-breadcrumb">
         Home / Products / {product.category} /
         <span> {product.productName}</span>
@@ -58,9 +82,7 @@ export default function ProductDetails() {
 
       <div className="pd-layout">
 
-        {/* LEFT SIDE */}
         <div className="pd-left">
-
           <div className="pd-main-image">
             {image && <img src={image} alt={product.productName} />}
           </div>
@@ -73,10 +95,8 @@ export default function ProductDetails() {
               <img src={product.image} alt="thumbnail" />
             </div>
           </div>
-
         </div>
 
-        {/* RIGHT SIDE */}
         <div className="pd-right">
 
           <h1 className="pd-title">{product.productName}</h1>

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import heroImg from "../assets/hero/hero-gift.jpg";
+import heroImg from "../assets/hero/hero-gift.webp";
 
 export default function Hero() {
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="relative max-w-6xl mx-auto rounded-3xl overflow-hidden bg-gray-100">
+    <section className="px-6 py-16 md:px-16">
+      <div className="relative max-w-6xl mx-auto overflow-hidden bg-gray-100 rounded-3xl">
         
         {/* IMAGE */}
         <img
@@ -14,15 +14,15 @@ export default function Hero() {
         />
 
         {/* OVERLAY */}
-        <div className="absolute inset-0 bg-white/60 flex flex-col items-center justify-center text-center px-6">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center bg-white/60">
           
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+          <h1 className="mb-6 text-4xl font-extrabold leading-tight text-gray-900 md:text-5xl">
             Find the Perfect Gift <br /> for Every Occasion
           </h1>
 
           <div className="flex gap-4">
             <Link to="/products">
-              <button className="bg-pink-500 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-pink-600 transition">
+              <button className="px-6 py-3 font-semibold text-white transition bg-pink-500 rounded-full shadow hover:bg-pink-600">
                 Shop Now
               </button>
             </Link>

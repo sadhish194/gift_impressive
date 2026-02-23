@@ -7,6 +7,9 @@ export default function Cart() {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
+  // ✅ Calculate total quantity properly
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+
   // Empty Cart
   if (cart.length === 0) {
     return (
@@ -35,7 +38,7 @@ export default function Cart() {
         <h1 className="mb-8 text-2xl font-bold text-gray-800 sm:text-3xl">
           Shopping Cart
           <span className="ml-2 text-sm font-medium text-pink-600">
-            ({cart.length} items)
+            ({totalItems} items)
           </span>
         </h1>
 
@@ -120,7 +123,7 @@ export default function Cart() {
 
             <div className="flex justify-between mb-2 text-gray-600">
               <span>Total Items</span>
-              <span>{cart.length}</span>
+              <span>{totalItems}</span>
             </div>
 
             <div className="flex justify-between mb-2 text-gray-600">

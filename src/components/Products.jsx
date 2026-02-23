@@ -10,15 +10,11 @@ export default function Products() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // 🔥 Fetch products from backend (Dynamic)
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get("/products");
-
-        // ✅ ONLY CHANGE: show first 4 products
         setProducts(res.data.slice(0, 8));
-
       } catch (err) {
         console.error(err);
         setError("Failed to load products");
@@ -30,7 +26,6 @@ export default function Products() {
     fetchProducts();
   }, []);
 
-  // 🔍 Category filter
   const categoryFiltered =
     activeCategory === "All"
       ? products
@@ -38,27 +33,61 @@ export default function Products() {
           (product) => product.category === activeCategory
         );
 
-  // 🔎 Search filter
   const filteredProducts = categoryFiltered.filter((product) =>
     product.productName
       ?.toLowerCase()
       .includes(searchQuery?.toLowerCase() || "")
   );
 
-  if (loading) {
-    return <p style={{ textAlign: "center" }}>Loading products...</p>;
-  }
-
-  if (error) {
-    return <p style={{ textAlign: "center", color: "red" }}>{error}</p>;
-  }
-
   return (
     <section className="products">
       <h2>Our Products</h2>
 
       <div className="grid">
-        {filteredProducts.length > 0 ? (
+
+        {/* 🔥 Loading Skeleton (same design structure) */}
+        {loading &&
+          Array.from({ length: 8 }).map((_, index) => (
+            <div key={index} className="product-card">
+              <div className="img-wrapper">
+                <div
+                  style={{
+                    height: "200px",
+                    background: "#e5e5e5",
+                  }}
+                ></div>
+              </div>
+
+              <div className="product-info">
+                <div
+                  style={{
+                    height: "20px",
+                    background: "#e5e5e5",
+                    marginBottom: "10px",
+                  }}
+                ></div>
+                <div
+                  style={{
+                    height: "20px",
+                    background: "#e5e5e5",
+                    width: "50%",
+                  }}
+                ></div>
+              </div>
+            </div>
+          ))}
+
+        {/* 🔥 Error */}
+        {!loading && error && (
+          <p style={{ gridColumn: "1 / -1", textAlign: "center", color: "red" }}>
+            {error}
+          </p>
+        )}
+
+        {/* 🔥 Real Products */}
+        {!loading &&
+          !error &&
+          filteredProducts.length > 0 &&
           filteredProducts.map((product) => (
             <Link
               to={`/product/${product._id}`}
@@ -95,17 +124,21 @@ export default function Products() {
                 </div>
               </div>
             </Link>
-          ))
-        ) : (
-          <p
-            style={{
-              gridColumn: "1 / -1",
-              textAlign: "center",
-            }}
-          >
-            No products found 😕
-          </p>
-        )}
+          ))}
+
+        {!loading &&
+          !error &&
+          filteredProducts.length === 0 && (
+            <p
+              style={{
+                gridColumn: "1 / -1",
+                textAlign: "center",
+              }}
+            >
+              No products found 😕
+            </p>
+          )}
+
       </div>
     </section>
   );

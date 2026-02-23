@@ -14,29 +14,6 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // 🔥 Fetch products from backend
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await axios.get("/products");
-        console.log(res.data);
-        setProducts(res.data);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to load products");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-useEffect(() => {
-  axios.get("http://localhost:5000/api/products")
-    .then(res => console.log("API DATA:", res.data))
-    .catch(err => console.error(err));
-}, []);
-  // 🔗 Sync category with URL
   useEffect(() => {
     if (category) {
       setActiveCategory(
@@ -47,39 +24,39 @@ useEffect(() => {
     }
   }, [category]);
 
-  // 🔍 Category filter (based on DB field)
-  const categoryFiltered =
-    activeCategory === "All"
-      ? products
-      : products.filter(
-          (product) =>
-            product.category?.toLowerCase() === activeCategory.toLowerCase()
-        );
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
 
-  // 🔎 Search filter
-  const filteredProducts = categoryFiltered.filter((product) =>
+        const url =
+          activeCategory === "All"
+            ? "/products"
+            : `/products?category=${activeCategory}`;
+
+        const res = await axios.get(url);
+        setProducts(res.data);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load products");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [activeCategory]);
+
+  const filteredProducts = products.filter((product) =>
     product.productName
       ?.toLowerCase()
       .includes(searchQuery?.toLowerCase() || "")
   );
 
-  if (loading) {
-    return <p style={{ textAlign: "center" }}>Loading products...</p>;
-  }
-
-  if (error) {
-    return (
-      <p style={{ textAlign: "center", color: "red" }}>
-        {error}
-      </p>
-    );
-  }
-
   return (
     <section className="products">
       <h2>Our Products</h2>
 
-      {/* CATEGORY FILTER TABS */}
       <div className="product-filters">
         {CATEGORIES.map((cat) => (
           <button
@@ -92,9 +69,57 @@ useEffect(() => {
         ))}
       </div>
 
-      {/* PRODUCTS GRID */}
       <div className="grid">
-        {filteredProducts.length > 0 ? (
+
+        {/* 🔥 Skeleton Loader */}
+        {loading &&
+          Array.from({ length: 8 }).map((_, index) => (
+            <div key={index} className="product-card">
+              <div className="img-wrapper">
+                <div
+                  style={{
+                    height: "200px",
+                    background: "#e5e5e5",
+                  }}
+                />
+              </div>
+
+              <div className="product-info">
+                <div
+                  style={{
+                    height: "20px",
+                    background: "#e5e5e5",
+                    marginBottom: "10px",
+                  }}
+                />
+                <div
+                  style={{
+                    height: "20px",
+                    background: "#e5e5e5",
+                    width: "50%",
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+
+        {/* 🔥 Error */}
+        {!loading && error && (
+          <p
+            style={{
+              gridColumn: "1 / -1",
+              textAlign: "center",
+              color: "red",
+            }}
+          >
+            {error}
+          </p>
+        )}
+
+        {/* 🔥 Real Products */}
+        {!loading &&
+          !error &&
+          filteredProducts.length > 0 &&
           filteredProducts.map((product) => (
             <Link
               to={`/product/${product._id}`}
@@ -125,28 +150,26 @@ useEffect(() => {
 
                 <div className="product-info">
                   <h4>{product.productName}</h4>
-
                   <div className="price">
                     ₹{product.price}
                   </div>
-
-                  {/* <div className="stock">
-                    Stock: {product.stock}
-                  </div> */}
                 </div>
               </div>
             </Link>
-          ))
-        ) : (
-          <p
-            style={{
-              gridColumn: "1 / -1",
-              textAlign: "center",
-            }}
-          >
-            No products found 😕
-          </p>
-        )}
+          ))}
+
+        {!loading &&
+          !error &&
+          filteredProducts.length === 0 && (
+            <p
+              style={{
+                gridColumn: "1 / -1",
+                textAlign: "center",
+              }}
+            >
+              No products found 😕
+            </p>
+          )}
       </div>
     </section>
   );

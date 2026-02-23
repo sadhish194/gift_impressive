@@ -1,11 +1,26 @@
 const mongoose = require("mongoose");
 
+const shippingSchema = new mongoose.Schema({
+  fullName: { type: String, required: true },
+  email: { type: String, required: true },
+  address: { type: String, required: true },
+  city: { type: String, required: true },
+  pincode: { type: String, required: true },
+}, { _id: false });
+
+const userSchema = new mongoose.Schema({
+  id: { type: String, required: true },
+  email: { type: String, required: true },
+}, { _id: false });
+
 const orderSchema = new mongoose.Schema(
   {
-    // ✅ Store phone/email as string (for now)
     user: {
-      type: String,
-      required: true,
+      type: userSchema,
+    },
+
+    shippingAddress: {
+      type: shippingSchema,
     },
 
     orderItems: [
@@ -15,31 +30,14 @@ const orderSchema = new mongoose.Schema(
           ref: "Product",
           required: true,
         },
-        quantity: {
-          type: Number,
-          required: true,
-        },
-        price: {
-          type: Number,
-          required: true,
-        },
+        quantity: { type: Number, required: true },
+        price: { type: Number, required: true },
       },
     ],
 
-    totalAmount: {
-      type: Number,
-      required: true,
-    },
-
-    paymentMethod: {
-      type: String,
-      required: true,
-    },
-
-    status: {
-      type: String,
-      default: "Placed",
-    },
+    totalAmount: { type: Number, required: true },
+    paymentMethod: { type: String, required: true },
+    status: { type: String, default: "Placed" },
   },
   { timestamps: true }
 );

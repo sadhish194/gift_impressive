@@ -1,15 +1,14 @@
-
 import { useCart } from "../context/CartContext";
 
 export default function CartItem({ item }) {
   const { removeFromCart, updateQty } = useCart();
 
   const decreaseQty = () => {
-    updateQty(item.id, Math.max(1, item.qty - 1));
+    updateQty(item._id, Math.max(1, item.qty - 1));
   };
 
   const increaseQty = () => {
-    updateQty(item.id, item.qty + 1);
+    updateQty(item._id, item.qty + 1);
   };
 
   return (
@@ -48,7 +47,7 @@ export default function CartItem({ item }) {
           {/* REMOVE ITEM */}
           <button
             className="remove-btn"
-            onClick={() => removeFromCart(item.id)}
+            onClick={() => removeFromCart(item._id)}
           >
             Remove
           </button>

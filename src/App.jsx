@@ -41,7 +41,7 @@ const UserLayout = ({ children }) => {
 const CartRouteGuard = ({ children }) => {
   const { loading } = useCart();
 
-  // ⛔ Block rendering until cart is fully hydrated
+  // Block rendering until cart is fully hydrated
   if (loading) {
     return null;
   }
@@ -51,7 +51,7 @@ const CartRouteGuard = ({ children }) => {
 
 function App() {
   return (
-    <AuthProvider>
+    
       <BrowserRouter>
         <Routes>
 
@@ -90,7 +90,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    
   );
 }
 
