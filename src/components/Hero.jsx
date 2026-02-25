@@ -1,32 +1,55 @@
 import { Link } from "react-router-dom";
 import heroImg from "../assets/hero/hero-gift.webp";
+import "../styles/components/hero.css";
 
 export default function Hero() {
   return (
-    <section className="px-6 py-16 md:px-16">
-      <div className="relative max-w-6xl mx-auto overflow-hidden bg-gray-100 rounded-3xl">
-        
-        {/* IMAGE */}
-        <img
-          src={heroImg}
-          alt="Gift"
-          className="w-full h-[530px] object-cover"
-        />
+    <section className="hero-section">
+      <div className="hero-container">
 
-        {/* OVERLAY */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center bg-white/60">
-          
-          <h1 className="mb-6 text-4xl font-extrabold leading-tight text-gray-900 md:text-5xl">
-            Find the Perfect Gift <br /> for Every Occasion
+        {/* IMAGE */}
+        <div className="hero-image-wrapper">
+          <img
+            src={heroImg}
+            alt="Luxury gift collection"
+            className="hero-image"
+          />
+        </div>
+
+        {/* TEXT */}
+        <div className="hero-content">
+
+          <p className="hero-subtitle">
+            Premium Gifting Collection
+          </p>
+
+          <h1 className="hero-title">
+            Find the Perfect Gift
+            <span className="block">
+              for{" "}
+              <span className="hero-gradient-text">
+                Every Occasion
+              </span>
+            </span>
           </h1>
 
-          <div className="flex gap-4">
-            <Link to="/products">
-              <button className="px-6 py-3 font-semibold text-white transition bg-pink-500 rounded-full shadow hover:bg-pink-600">
-                Shop Now
-              </button>
+          <p className="hero-description">
+            Thoughtfully curated gifts crafted to celebrate life’s most
+            meaningful moments with elegance and intention.
+          </p>
+
+          <div className="hero-buttons">
+
+            <Link to="/products" className="btn-primary">
+              Explore Collection
             </Link>
+
+            <Link to="category/corporate" className="btn-secondary">
+              Corporate Gifting
+            </Link>
+
           </div>
+
         </div>
       </div>
     </section>

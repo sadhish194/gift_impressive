@@ -6,7 +6,7 @@
    SECTION
 ================================ */
 .testimonials-section {
-  @apply w-full py-16;
+  @apply w-full py-16 bg-white;
 }
 
 /* ===============================

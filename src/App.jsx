@@ -15,6 +15,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
 import Payment from "./pages/Payment";
 import Login from "./pages/Login";
 
@@ -79,6 +80,7 @@ function App() {
 
           <Route path="/payment" element={<UserLayout><Payment /></UserLayout>} />
           <Route path="/about" element={<UserLayout><About /></UserLayout>} />
+          <Route path="/contact" element={<UserLayout><Contact /></UserLayout>} />
           <Route path="/login" element={<UserLayout><Login /></UserLayout>} />
 
           {/* -------- ADMIN ROUTES -------- */}

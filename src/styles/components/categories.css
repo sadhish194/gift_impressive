@@ -1,65 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* =========================
-   CATEGORIES SECTION
+   SECTION
 ========================= */
 
-.categories {
-  padding: 4rem 6rem;
+.categories-section {
+  @apply w-full py-32 bg-gray-50;
 }
 
-/* Section Heading */
-.section-title {
-  @apply text-[1.75rem] font-bold text-center mb-10;
-}
-
-/* Grid Layout */
-.categories .grid {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-@media (min-width: 768px) {
-  .categories .grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+/* Better container balance */
+.categories-container {
+  @apply max-w-[1350px] mx-auto px-6;
 }
 
 /* =========================
-   CATEGORY CARD
+   HEADER
+========================= */
+
+.categories-header {
+  @apply mb-20 text-center;
+}
+
+.categories-title {
+  @apply text-5xl font-semibold tracking-tight text-gray-900;
+}
+
+.categories-subtitle {
+  @apply mt-6 text-lg text-gray-500;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.categories-grid {
+  @apply grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4;
+}
+
+/* =========================
+   CARD
 ========================= */
 
 .category-card {
-  @apply relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300;
-  height: 200px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-}
-
-/* Background Image */
-.category-card img {
-  @apply w-full h-full object-cover transition-transform duration-500;
-}
-
-/* Overlay */
-.category-card::after {
-  content: "";
-  @apply absolute inset-0 bg-black/30;
-}
-
-/* Title */
-.category-card span {
-  @apply absolute inset-0 flex items-center justify-center
-         text-white text-lg font-semibold tracking-wide z-10;
-}
-
-/* Hover Effects */
-.category-card:hover img {
-  transform: scale(1.1);
+  @apply relative
+         h-[360px]
+         rounded-3xl
+         overflow-hidden
+         shadow-md
+         transition duration-500;
 }
 
 .category-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
 }
-.section-title {
-  @apply text-[1.75rem] font-bold mb-10 text-center;
+
+.category-image {
+  @apply object-cover w-full h-full transition duration-700;
+}
+
+.category-card:hover .category-image {
+  @apply scale-105;
+}
+
+.category-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent;
+}
+
+.category-content {
+  @apply absolute inset-0 flex flex-col justify-end text-white p-7;
+}
+
+.category-icon {
+  @apply absolute top-5 right-5
+         p-2.5 rounded-full
+         bg-white/20 backdrop-blur-sm
+         border border-white/30
+         transition duration-300;
+}
+
+.category-title {
+  @apply text-2xl font-semibold;
+}
+
+.category-link {
+  @apply mt-2 text-sm opacity-90;
+}
+
+.category-border {
+  @apply absolute inset-0 transition duration-300 border rounded-3xl border-white/0;
+}
+
+.category-card:hover .category-border {
+  @apply border-white/40;
 }

@@ -1,96 +1,99 @@
- /* PRODUCTS SECTION */
-.products {
-  padding: 2.5rem 6rem 4rem;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==============================
+   SECTION
+============================== */
+
+.products-section {
+  @apply w-full py-24 bg-gray-50;
 }
 
-.products h2 {
-  @apply text-[1.75rem] font-bold text-center mb-10;
+.products-container {
+  @apply max-w-[1350px] mx-auto px-6;
 }
 
-/* GRID — use CSS, NOT @apply */
-.products .grid {
-  display: grid;
-  gap: 2rem;
-  align-items: stretch;
+/* ==============================
+   HEADER
+============================== */
+
+.products-header {
+  @apply mb-20 text-center;
 }
 
-@media (min-width: 640px) {
-  .products .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.products-title {
+  @apply text-3xl font-bold tracking-tight text-gray-900 md:text-4xl lg:text-5xl;
 }
 
-@media (min-width: 1024px) {
-  .products .grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+/* ==============================
+   GRID
+============================== */
+
+.products-grid {
+  @apply grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4;
 }
 
-/* PRODUCT CARD */
+.product-link {
+  @apply no-underline text-inherit;
+}
+
+/* ==============================
+   CARD
+============================== */
+
 .product-card {
-  @apply bg-white rounded-[18px] overflow-hidden
-         transition-transform transition-shadow duration-300;
-  display: flex;              /* ❗ CSS */
-  flex-direction: column;     /* ❗ CSS */
-  box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+  @apply flex flex-col h-full transition-all duration-500 bg-white shadow-md rounded-3xl;
 }
 
 .product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  @apply -translate-y-2 shadow-2xl;
 }
 
-/* IMAGE WRAPPER */
-.img-wrapper {
-  @apply relative overflow-hidden shrink-0;
-  height: 220px;              /* ❗ CSS */
+/* ==============================
+   IMAGE (NO STRETCH VERSION)
+============================== */
+
+.product-image-wrapper {
+  @apply flex items-center justify-center w-full h-64 overflow-hidden bg-gray-100 rounded-t-3xl;
 }
 
-.img-wrapper img {
-  @apply w-full h-full object-cover transition-transform duration-500;
+.product-image {
+  @apply object-contain max-h-full transition duration-500;
 }
 
-.product-card:hover img {
-  transform: scale(1.1);
+.product-card:hover .product-image {
+  @apply scale-105;
 }
 
-/* OVERLAY */
-.overlay {
-  @apply absolute inset-0 bg-black/60
-         opacity-0 transition-opacity duration-300;
-  display: flex;              /* ❗ CSS */
-  align-items: center;
-  justify-content: center;
+/* ==============================
+   BODY
+============================== */
+
+.product-body {
+  @apply flex flex-col flex-grow p-6;
 }
 
-.product-card:hover .overlay {
-  @apply opacity-100;
+.product-name {
+  @apply mb-4 text-base font-semibold text-gray-800 line-clamp-2;
 }
 
-/* OVERLAY BUTTON */
-.overlay button {
-  @apply bg-pink-600 text-white font-semibold
-         px-7 py-3 rounded-full cursor-pointer
-         transition-transform transition-colors duration-200;
+.product-bottom {
+  @apply flex items-center justify-between mt-auto;
 }
 
-.overlay button:hover {
-  @apply bg-pink-700 scale-105;
+.product-price {
+  @apply text-xl font-extrabold text-gray-900;
 }
 
-/* PRODUCT INFO */
-.product-info {
-  @apply text-center p-4 bg-white;
+/* ==============================
+   BUTTON
+============================== */
+
+.add-btn {
+  @apply flex items-center justify-center text-xl text-white transition-all duration-300 bg-pink-500 rounded-full shadow-md w-11 h-11;
 }
 
-.product-info h4 {
-  @apply text-base font-semibold mb-1.5;
-}
-
-.rating {
-  @apply text-sm text-yellow-500 mb-1.5;
-}
-
-.price {
-  @apply text-lg font-bold;
+.add-btn:hover {
+  @apply scale-110 bg-pink-600 shadow-lg;
 }

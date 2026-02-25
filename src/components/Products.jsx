@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../api/axios";
 import { useCart } from "../context/CartContext";
+import "../styles/components/products.css";
 
 export default function Products() {
   const { addToCart, searchQuery } = useCart();
@@ -40,104 +41,64 @@ export default function Products() {
   );
 
   return (
-    <section className="products">
-      <h2>Our Products</h2>
+    <section className="products-section">
+      <div className="products-container">
 
-      <div className="grid">
+        <div className="products-header">
+          <h2 className="products-title">
+            Featured <span className="text-pink-500">Products</span>
+          </h2>
+        </div>
 
-        {/* 🔥 Loading Skeleton (same design structure) */}
-        {loading &&
-          Array.from({ length: 8 }).map((_, index) => (
-            <div key={index} className="product-card">
-              <div className="img-wrapper">
-                <div
-                  style={{
-                    height: "200px",
-                    background: "#e5e5e5",
-                  }}
-                ></div>
-              </div>
+        {loading ? (
+          <div className="text-center text-gray-500">Loading products...</div>
+        ) : error ? (
+          <div className="text-center text-red-500">{error}</div>
+        ) : (
+          <div className="products-grid">
+            {filteredProducts.map((product) => (
+              <Link
+                to={`/product/${product._id}`}
+                key={product._id}
+                className="product-link"
+              >
+                <div className="product-card">
 
-              <div className="product-info">
-                <div
-                  style={{
-                    height: "20px",
-                    background: "#e5e5e5",
-                    marginBottom: "10px",
-                  }}
-                ></div>
-                <div
-                  style={{
-                    height: "20px",
-                    background: "#e5e5e5",
-                    width: "50%",
-                  }}
-                ></div>
-              </div>
-            </div>
-          ))}
+                  <div className="product-image-wrapper">
+                    <img
+                      src={product.image || "https://via.placeholder.com/400"}
+                      alt={product.productName}
+                      className="product-image"
+                    />
+                  </div>
 
-        {/* 🔥 Error */}
-        {!loading && error && (
-          <p style={{ gridColumn: "1 / -1", textAlign: "center", color: "red" }}>
-            {error}
-          </p>
+                  <div className="product-body">
+                    <h4 className="product-name">
+                      {product.productName}
+                    </h4>
+
+                    <div className="product-bottom">
+                      <span className="product-price">
+                        ₹{product.price}
+                      </span>
+
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCart(product);
+                        }}
+                        className="add-btn"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </Link>
+            ))}
+          </div>
         )}
-
-        {/* 🔥 Real Products */}
-        {!loading &&
-          !error &&
-          filteredProducts.length > 0 &&
-          filteredProducts.map((product) => (
-            <Link
-              to={`/product/${product._id}`}
-              key={product._id}
-              className="product-link"
-            >
-              <div className="product-card">
-                <div className="img-wrapper">
-                  <img
-                    src={
-                      product.image ||
-                      "https://via.placeholder.com/300"
-                    }
-                    alt={product.productName}
-                  />
-
-                  <div className="overlay">
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        addToCart(product);
-                      }}
-                    >
-                      🛒 Add to Cart
-                    </button>
-                  </div>
-                </div>
-
-                <div className="product-info">
-                  <h4>{product.productName}</h4>
-                  <div className="price">
-                    ₹{product.price}
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
-
-        {!loading &&
-          !error &&
-          filteredProducts.length === 0 && (
-            <p
-              style={{
-                gridColumn: "1 / -1",
-                textAlign: "center",
-              }}
-            >
-              No products found 😕
-            </p>
-          )}
 
       </div>
     </section>

@@ -1,26 +1,24 @@
 
 /* Main container */
 .about {
-  @apply max-w-5xl mx-auto px-6 py-12;
+  @apply max-w-5xl px-6 py-12 mx-auto;
 }
 
 /* Header section */
 .about-header {
-  @apply text-center mb-10;
+  @apply mb-10 text-center;
 }
 
 /* Logo */
 /* Logo wrapper effect */
 .about-logo {
-  @apply w-32 md:w-36 mx-auto mb-6
-         p-4 rounded-2xl bg-white
-         shadow-md ring-1 ring-slate-200;
+  @apply w-32 p-4 mx-auto mb-6 bg-white shadow-md md:w-36 rounded-2xl ring-1 ring-slate-200;
 }
 
 
 /* Heading */
 .about-header h1 {
-  @apply text-4xl font-bold text-gray-800 mb-2;
+  @apply mb-2 text-4xl font-bold text-gray-800;
 }
 
 /* Subtitle */
@@ -30,16 +28,10 @@
 
 /* Content text */
 .about-content {
-  @apply max-w-4xl mx-auto
-         mt-12
-         space-y-6
-         text-justify
-         text-slate-800
-         leading-relaxed
-         text-base md:text-lg;
+  @apply max-w-4xl mx-auto mt-12 space-y-6 text-base leading-relaxed text-justify text-slate-800 md:text-lg;
 }
 .about-content strong {
-  @apply text-slate-900 font-semibold;
+  @apply font-semibold text-slate-900;
 }
 
 
@@ -50,13 +42,12 @@
 
 /* Value cards */
 .value-card {
-  @apply bg-white border rounded-xl p-6 text-center shadow-sm
-         hover:shadow-md transition duration-300;
+  @apply p-6 text-center transition duration-300 bg-white border shadow-sm rounded-xl hover:shadow-md;
 }
 
 /* Value titles */
 .value-card h3 {
-  @apply text-xl font-semibold text-gray-800 mb-2;
+  @apply mb-2 text-xl font-semibold text-gray-800;
 }
 
 /* Value text */

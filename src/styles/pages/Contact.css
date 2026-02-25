@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =================================
+   CONTACT SECTION
+================================= */
+
+.contact-section {
+  @apply w-full py-20 bg-white;
+}
+
+.contact-container {
+  @apply max-w-[1100px] mx-auto px-6;
+}
+
+/* =================================
+   HEADER
+================================= */
+
+.contact-header {
+  @apply mb-16 text-center;
+}
+
+.contact-header h1 {
+  @apply mb-4 text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl;
+}
+
+.contact-header p {
+  @apply max-w-2xl mx-auto text-gray-500;
+}
+
+/* =================================
+   GRID
+================================= */
+
+.contact-grid {
+  @apply grid gap-12;
+}
+
+@media (min-width: 768px) {
+  .contact-grid {
+    @apply grid-cols-2;
+  }
+}
+
+/* =================================
+   CONTACT INFO
+================================= */
+
+.contact-info {
+  @apply space-y-8;
+}
+
+.info-item {
+  @apply flex items-start gap-4;
+}
+
+.info-icon {
+  @apply mt-1 text-xl text-pink-500;
+}
+
+.info-item h4 {
+  @apply font-semibold text-gray-900;
+}
+
+.info-item p {
+  @apply text-sm text-gray-500;
+}
+
+/* =================================
+   FORM
+================================= */
+
+.contact-form {
+  @apply p-8 bg-white border border-gray-100 shadow-sm rounded-2xl;
+}
+
+.form-group {
+  @apply flex flex-col mb-6;
+}
+
+.form-group label {
+  @apply mb-2 text-sm font-medium text-gray-700;
+}
+
+.form-group input,
+.form-group textarea {
+  @apply px-4 py-2 transition border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400;
+}
+
+.submit-btn {
+  @apply w-full py-3 font-semibold text-white transition-all duration-300 rounded-full shadow-md bg-gradient-to-r from-pink-500 to-pink-600;
+}
+
+.submit-btn:hover {
+  @apply scale-[1.02] shadow-lg;
+}

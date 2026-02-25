@@ -4,13 +4,12 @@
 ================================ */
 
 .footer {
-  @apply bg-black text-white mt-16;
+  @apply mt-16 text-white bg-black;
 }
 
 /* Layout */
 .footer-top {
-  @apply max-w-7xl mx-auto px-8 py-12
-         grid grid-cols-1 md:grid-cols-4 gap-12;
+  @apply grid grid-cols-1 gap-12 px-8 py-12 mx-auto max-w-7xl md:grid-cols-4;
 }
 
 /* Each footer column */
@@ -31,21 +30,21 @@
 
 /* Brand */
 .footer-brand h2 {
-  @apply text-2xl font-bold mb-3;
+  @apply mb-3 text-2xl font-bold;
 }
 
 .footer-brand p {
-  @apply text-gray-400 leading-relaxed;
+  @apply leading-relaxed text-gray-400;
 }
 
 /* Section titles */
 .footer-title {
-  @apply text-lg font-semibold mb-4 text-white;
+  @apply mb-4 text-lg font-semibold text-white;
 }
 
 /* Lists */
 .footer-list {
-  @apply list-none text-sm space-y-3 text-gray-400;
+  @apply space-y-3 text-sm text-gray-400 list-none;
   padding-left: 0;
 }
 
@@ -75,8 +74,7 @@
 
 /* Bottom bar */
 .footer-bottom {
-  @apply border-t border-gray-700
-         text-center py-5 text-sm text-gray-400;
+  @apply py-5 text-sm text-center text-gray-400 border-t border-gray-700;
 }
 
 /* ===============================

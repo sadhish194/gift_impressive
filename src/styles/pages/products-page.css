@@ -1,134 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ===============================
    PRODUCTS SECTION
 ================================ */
+
 .products {
-  padding: 2.5rem 6rem 4rem;
+  @apply w-full py-16 bg-white;
 }
 
-.products h2 {
-  @apply text-[1.75rem] font-bold text-center mb-10;
+.products-container {
+  @apply max-w-[1350px] mx-auto px-6;
+}
+
+.products-title {
+  @apply mb-12 text-3xl font-bold text-center md:text-4xl;
+}
+
+/* ===============================
+   FILTER BUTTONS
+================================ */
+
+.product-filters {
+  @apply flex flex-wrap justify-center gap-4 mb-12;
+}
+
+.filter-btn {
+  @apply px-5 py-2 text-sm font-medium transition-all duration-300 bg-white border border-gray-200 rounded-full;
+}
+
+.filter-btn:hover {
+  @apply text-pink-500 border-pink-500;
+}
+
+.filter-btn.active {
+  @apply text-white border-transparent shadow-lg;
+  background: linear-gradient(135deg, #ff5f7e, #ff7a92);
 }
 
 /* ===============================
    GRID
 ================================ */
-.products .grid {
-  display: grid;
-  gap: 2rem;
-  align-items: stretch;
+
+.products-grid {
+  @apply grid gap-8;
 }
 
 @media (min-width: 640px) {
-  .products .grid {
-    grid-template-columns: repeat(2, 1fr);
+  .products-grid {
+    @apply grid-cols-2;
   }
 }
 
 @media (min-width: 1024px) {
-  .products .grid {
-    grid-template-columns: repeat(4, 1fr);
+  .products-grid {
+    @apply grid-cols-4;
   }
+}
+
+.full-width {
+  grid-column: 1 / -1;
 }
 
 /* ===============================
    PRODUCT CARD
 ================================ */
+
 .product-card {
-  @apply bg-white rounded-[18px] overflow-hidden
-         transition-transform transition-shadow duration-300;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+  @apply flex flex-col h-full overflow-hidden transition-all duration-300 bg-white shadow-sm rounded-2xl;
 }
 
 .product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  @apply -translate-y-2 shadow-xl;
+}
+
+.product-link {
+  @apply no-underline text-inherit;
 }
 
 /* ===============================
-   IMAGE WRAPPER (FIXED & BALANCED)
+   IMAGE
 ================================ */
+
 .img-wrapper {
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-  height: 260px;                 /* balanced image area */
-  background: #f9fafb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @apply relative h-[260px] bg-gray-50
+         flex items-center justify-center overflow-hidden;
 }
 
-/* IMAGE — CLEAN LOOK */
 .img-wrapper img {
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;           /* no cropping */
-  transition: transform 0.4s ease;
+  @apply max-w-[90%] max-h-[90%] object-contain
+         transition-transform duration-500;
 }
 
-/* HOVER EFFECT */
 .product-card:hover img {
-  transform: scale(1.05);
+  @apply scale-105;
 }
 
 /* ===============================
    OVERLAY
 ================================ */
+
 .overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @apply absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/60;
 }
 
 .product-card:hover .overlay {
-  opacity: 1;
+  @apply opacity-100;
 }
 
-/* ===============================
-   OVERLAY BUTTON
-================================ */
 .overlay button {
-  padding: 0.75rem 1.75rem;
-  background: #ec4899;
-  color: #ffffff;
-  font-weight: 600;
-  border-radius: 9999px;
-  cursor: pointer;
-  border: none;
-  transition: transform 0.2s ease, background 0.2s ease;
+  @apply px-6 py-3 font-semibold text-white transition-all duration-300 bg-pink-500 rounded-full;
 }
 
 .overlay button:hover {
-  background: #db2777;
-  transform: scale(1.05);
+  @apply scale-105 bg-pink-600;
 }
 
 /* ===============================
    PRODUCT INFO
 ================================ */
+
 .product-info {
-  @apply p-4 text-center bg-white;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @apply flex flex-col justify-between flex-grow p-5 text-center;
 }
 
 .product-info h4 {
-  @apply text-base font-semibold mb-1.5;
-  min-height: 3rem;
-}
-
-.rating {
-  @apply text-sm text-yellow-500 mb-1.5;
+  @apply text-base font-semibold mb-2 min-h-[3rem];
 }
 
 .price {
@@ -136,35 +134,17 @@
 }
 
 /* ===============================
-   PRODUCT FILTER TABS
+   SKELETON
 ================================ */
-.product-filters {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2.5rem;
-  flex-wrap: wrap;
+
+.skeleton-img {
+  @apply w-full h-full bg-gray-200 animate-pulse;
 }
 
-.product-filters button {
-  padding: 0.5rem 1.4rem;
-  border-radius: 9999px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  font-weight: 500;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.25s ease;
+.skeleton-title {
+  @apply h-5 mb-3 bg-gray-200 animate-pulse;
 }
 
-.product-filters button:hover {
-  border-color: #ec4899;
-  color: #ec4899;
-}
-
-.product-filters button.active {
-  background: linear-gradient(135deg, #ff5f7e, #ff7a92);
-  color: #ffffff;
-  border-color: transparent;
-  box-shadow: 0 8px 20px rgba(255, 95, 126, 0.35);
+.skeleton-price {
+  @apply w-1/2 h-5 bg-gray-200 animate-pulse;
 }

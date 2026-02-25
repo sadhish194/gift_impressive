@@ -1,63 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* ===============================
-   OFFERS SECTION
+   SECTION
 ================================ */
-.offers {
-  @apply mx-16 my-12 px-10 py-12
-         rounded-[24px] text-center text-white
-         bg-gradient-to-b
-         from-[#ec4899] to-[#ec4899];
+
+.offers-section {
+  @apply w-full py-32 bg-white;
 }
 
+.offers-container {
+  @apply max-w-[1350px] mx-auto px-6;
+}
 
-/* Subtle background highlight (no white bottom) */
-.offers::before {
+/* ===============================
+   CARD
+================================ */
+
+.offers-card {
+  @apply relative px-12 py-16 overflow-hidden text-center text-white shadow-xl rounded-3xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600;
+}
+
+/* Subtle light effect */
+.offers-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 65%);
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.25), transparent 60%);
   pointer-events: none;
 }
 
 /* ===============================
-   TEXT
+   CONTENT
 ================================ */
-.offers h2 {
-  @apply text-2xl md:text-3xl lg:text-4xl font-extrabold mb-3 tracking-tight;
+
+.offers-content {
+  @apply relative z-10 max-w-3xl mx-auto;
 }
 
-.offers p {
-  @apply text-base md:text-lg opacity-95 mb-7;
+.offer-badge {
+  @apply inline-block px-5 py-2 mb-6 text-sm font-medium rounded-full bg-white/20 backdrop-blur-sm;
+}
+
+.offers-title {
+  @apply mb-6 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl;
+}
+
+.offers-description {
+  @apply mb-8 text-lg opacity-95;
 }
 
 /* ===============================
    BUTTON
 ================================ */
-.offers button {
-  @apply inline-flex items-center justify-center
-         bg-white text-pink-600
-         px-8 md:px-10 py-3
-         rounded-full font-semibold text-sm md:text-base
-         shadow-md transition-all duration-300;
+
+.offers-btn {
+  @apply inline-flex items-center justify-center px-10 py-3 font-semibold text-pink-600 transition duration-300 bg-white rounded-full shadow-md;
 }
 
-.offers button:hover {
-  @apply bg-pink-50 scale-105 shadow-lg;
+.offers-btn:hover {
+  @apply scale-105 shadow-lg bg-pink-50;
 }
 
 /* ===============================
-   MOBILE OPTIMIZATION
+   RESPONSIVE
 ================================ */
-@media (max-width: 480px) {
-  .offers {
-    @apply mx-4 px-5 py-8 rounded-2xl;
+
+@media (max-width: 768px) {
+  .offers-card {
+    @apply px-6 py-12;
   }
 
-  .offers h2 {
-    @apply text-xl;
+  .offers-title {
+    @apply text-2xl;
   }
 
-  .offers p {
-    @apply text-sm;
+  .offers-description {
+    @apply text-base;
   }
 }

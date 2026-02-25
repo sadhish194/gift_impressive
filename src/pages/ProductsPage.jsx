@@ -55,121 +55,90 @@ export default function ProductsPage() {
 
   return (
     <section className="products">
-      <h2>Our Products</h2>
+      <div className="products-container">
 
-      <div className="product-filters">
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat}
-            className={activeCategory === cat ? "active" : ""}
-            onClick={() => setActiveCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+        <h2 className="products-title">Our Products</h2>
 
-      <div className="grid">
-
-        {/* 🔥 Skeleton Loader */}
-        {loading &&
-          Array.from({ length: 8 }).map((_, index) => (
-            <div key={index} className="product-card">
-              <div className="img-wrapper">
-                <div
-                  style={{
-                    height: "200px",
-                    background: "#e5e5e5",
-                  }}
-                />
-              </div>
-
-              <div className="product-info">
-                <div
-                  style={{
-                    height: "20px",
-                    background: "#e5e5e5",
-                    marginBottom: "10px",
-                  }}
-                />
-                <div
-                  style={{
-                    height: "20px",
-                    background: "#e5e5e5",
-                    width: "50%",
-                  }}
-                />
-              </div>
-            </div>
-          ))}
-
-        {/* 🔥 Error */}
-        {!loading && error && (
-          <p
-            style={{
-              gridColumn: "1 / -1",
-              textAlign: "center",
-              color: "red",
-            }}
-          >
-            {error}
-          </p>
-        )}
-
-        {/* 🔥 Real Products */}
-        {!loading &&
-          !error &&
-          filteredProducts.length > 0 &&
-          filteredProducts.map((product) => (
-            <Link
-              to={`/product/${product._id}`}
-              key={product._id}
-              className="product-link"
+        <div className="product-filters">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              className={`filter-btn ${activeCategory === cat ? "active" : ""}`}
+              onClick={() => setActiveCategory(cat)}
             >
-              <div className="product-card">
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div className="products-grid">
+
+          {/* Loading Skeleton */}
+          {loading &&
+            Array.from({ length: 8 }).map((_, index) => (
+              <div key={index} className="product-card">
                 <div className="img-wrapper">
-                  <img
-                    src={
-                      product.image ||
-                      "https://via.placeholder.com/300"
-                    }
-                    alt={product.productName}
-                  />
-
-                  <div className="overlay">
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        addToCart(product);
-                      }}
-                    >
-                      🛒 Add to Cart
-                    </button>
-                  </div>
+                  <div className="skeleton-img" />
                 </div>
-
                 <div className="product-info">
-                  <h4>{product.productName}</h4>
-                  <div className="price">
-                    ₹{product.price}
-                  </div>
+                  <div className="skeleton-title" />
+                  <div className="skeleton-price" />
                 </div>
               </div>
-            </Link>
-          ))}
+            ))}
 
-        {!loading &&
-          !error &&
-          filteredProducts.length === 0 && (
-            <p
-              style={{
-                gridColumn: "1 / -1",
-                textAlign: "center",
-              }}
-            >
-              No products found 😕
+          {/* Error */}
+          {!loading && error && (
+            <p className="text-center text-red-500 full-width">
+              {error}
             </p>
           )}
+
+          {/* Real Products */}
+          {!loading &&
+            !error &&
+            filteredProducts.length > 0 &&
+            filteredProducts.map((product) => (
+              <Link
+                to={`/product/${product._id}`}
+                key={product._id}
+                className="product-link"
+              >
+                <div className="product-card">
+                  <div className="img-wrapper">
+                    <img
+                      src={product.image || "https://via.placeholder.com/300"}
+                      alt={product.productName}
+                    />
+                    <div className="overlay">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCart(product);
+                        }}
+                      >
+                        🛒 Add to Cart
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="product-info">
+                    <h4>{product.productName}</h4>
+                    <div className="price">₹{product.price}</div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+
+          {!loading &&
+            !error &&
+            filteredProducts.length === 0 && (
+              <p className="text-center full-width">
+                No products found 😕
+              </p>
+            )}
+
+        </div>
       </div>
     </section>
   );
